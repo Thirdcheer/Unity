@@ -24,6 +24,12 @@ public class SceneLoader : MonoBehaviour {
         string t = input.GetComponent<InputField>().text;
         int numberOfCookies;
         Int32.TryParse(t, out numberOfCookies);
+        if (numberOfCookies <= 0)
+            numberOfCookies = 20;
+        else if (numberOfCookies > 100)
+        {
+            numberOfCookies = 100;
+        }
         PlayerPrefs.SetInt("Number of cookies", numberOfCookies);
 
         Application.LoadLevel(scene);
