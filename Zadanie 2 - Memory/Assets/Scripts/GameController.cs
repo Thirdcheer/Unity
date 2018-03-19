@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.Experimental.UIElements;
 
 public class GameController : MonoBehaviour
 {
@@ -13,22 +15,27 @@ public class GameController : MonoBehaviour
     public float offsetCol = 1.5f;
     
     private int score = 0;
+    private int matches = 0;
+
 
     public GameObject[] availableCards;
     private GameObject[] cardsToSpawn;
     private Sprite[] image;
+    private bool clickingBlocked;
 
     public Text scoreLabel;
+    public Text winLabel;
 
     private Card firstCard;
     private Card secondCard;
-    private GameObject spawnPos;
+    public GameObject spawnPos;
 
 
 
     // Use this for initialization
     void Start()
     {
+        winLabel.enabled = false;
         Vector3 startPos = spawnPos.transform.position;
 
         cardsToSpawn = new GameObject[16];
@@ -82,27 +89,52 @@ public class GameController : MonoBehaviour
 
     public IEnumerator CheckMatch()
     {
-        if(firstCard.name == secondCard.name)
+        if(firstCard.cardName == secondCard.cardName)
         {
             score += 10;
             scoreLabel.text = "Score: " + score;
+            matches += 1;
+
+            Debug.Log("Matches " + matches);
+
+            if (matches == 8)
+            {
+                Debug.Log("Matches completed" + matches);
+                winLabel.enabled = true;
+            }
         }
         else
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1.0f);
 
+            score -= 2;
+            scoreLabel.text = "Score: " + score;
+
+            clickingBlocked = true;
             firstCard.Unreveal();
             secondCard.Unreveal();
+            clickingBlocked = false;
         }
 
         firstCard = null;
         secondCard = null;
     }
 
+    public bool Blocked()
+    {
+        return clickingBlocked;
+    }
+
     public bool canBeRevealed()
     {
         return secondCard == null;
     }
+
+    public bool twoRevealed()
+    {
+        return firstCard != null && secondCard != null;
+    }
+
 }
 
 
