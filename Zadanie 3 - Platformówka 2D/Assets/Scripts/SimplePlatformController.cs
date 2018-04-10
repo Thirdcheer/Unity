@@ -1,0 +1,72 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
+
+public class SimplePlatformController : MonoBehaviour
+{
+
+    [HideInInspector] public bool facingRight = true;
+    [HideInInspector] public bool jump = false;
+    public float moveForce = 365f;
+    public float maxSpeed = 5f;
+    public float jumpForce = 1000f;
+    public Transform groundCheck;
+    public DeathTrigger dt;  
+
+    private bool grounded = false;
+    private Animator anim;
+    private Rigidbody2D rb2d;
+
+    private void Start() {
+              
+    }
+
+    private void OnLevelWasLoaded(int level) {
+        gameObject.transform.position = new Vector2(0, 0);
+    }
+    // Use this for initialization
+    void Awake() {
+        anim = GetComponent<Animator>();
+        rb2d = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update() {
+        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("round"));
+
+        if (Input.GetButtonDown("Jump") && grounded)
+        {
+            jump = true;
+        }
+    }
+
+    void FixedUpdate() {
+        float h = Input.GetAxis("Horizontal");
+
+        anim.SetFloat("Speed", Mathf.Abs(h));
+
+        if (h * rb2d.velocity.x < maxSpeed)
+            rb2d.AddForce(Vector2.right * h * moveForce);
+
+        if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+            rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
+
+        if (h > 0 && !facingRight)
+            Flip();
+        else if (h < 0 && facingRight)
+            Flip();
+
+        if (jump)
+        {
+            anim.SetTrigger("Jump");
+            rb2d.AddForce(new Vector2(0f, jumpForce));
+            jump = false;
+        }
+    }
+
+
+    void Flip() {
+        facingRight = !facingRight;
+        transform.localScale.Set(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+    }
+}
