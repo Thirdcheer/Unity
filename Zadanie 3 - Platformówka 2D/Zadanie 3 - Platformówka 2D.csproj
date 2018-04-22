@@ -285,26 +285,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Coin.cs" />
-    <Compile Include="Assets\DeathTrigger.cs" />
-    <Compile Include="Assets\EnemyController.cs" />
-    <Compile Include="Assets\GameStats.cs" />
-    <Compile Include="Assets\NewLevel.cs" />
+    <Compile Include="Assets\MyPrefabs\Coin.cs" />
+    <Compile Include="Assets\MyPrefabs\DeathTrigger.cs" />
+    <Compile Include="Assets\MyPrefabs\Enemy.cs" />
+    <Compile Include="Assets\MyPrefabs\EnemyController.cs" />
+    <Compile Include="Assets\MyPrefabs\GameStats.cs" />
+    <Compile Include="Assets\MyPrefabs\MovingPlatformScript.cs" />
+    <Compile Include="Assets\MyPrefabs\NewLevel.cs" />
+    <Compile Include="Assets\MyPrefabs\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\BackgroundParallax.cs" />
     <Compile Include="Assets\Scripts\BackgroundPropSpawner.cs" />
     <Compile Include="Assets\Scripts\Bomb.cs" />
     <Compile Include="Assets\Scripts\BombPickup.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Destroyer.cs" />
-    <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\Gun.cs" />
     <Compile Include="Assets\Scripts\HealthPickup.cs" />
     <Compile Include="Assets\Scripts\LayBombs.cs" />
-    <Compile Include="Assets\Scripts\MovingPlatformScript.cs" />
     <Compile Include="Assets\Scripts\Pauser.cs" />
     <Compile Include="Assets\Scripts\PickupSpawner.cs" />
-    <Compile Include="Assets\Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\Remover.cs" />
     <Compile Include="Assets\Scripts\Rocket.cs" />
