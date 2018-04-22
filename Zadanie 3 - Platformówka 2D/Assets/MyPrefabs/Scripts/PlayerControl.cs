@@ -3,6 +3,9 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour
 {
+    public GameObject firePrefab;
+    public Transform fireSpawn;
+
 	[HideInInspector]
 	public bool facingRight = true;			
 	[HideInInspector]
@@ -11,8 +14,8 @@ public class PlayerControl : MonoBehaviour
 
 	public float moveForce = 365f;			
 	public float maxSpeed = 5f;				
-	public AudioClip[] jumpClips;			
-	public float jumpForce = 1000f;			
+	public float jumpForce = 1000f;		
+    
 
 	private Transform groundCheck;			
 	private bool grounded = false;			
@@ -20,7 +23,7 @@ public class PlayerControl : MonoBehaviour
     GameStats gs;
 
     private void OnLevelWasLoaded(int level) {
-        gameObject.transform.position = new Vector2(0, 0);
+        gameObject.transform.position = new Vector2(0, 0.81f);
     }
 
     private void Start() {
@@ -35,11 +38,21 @@ public class PlayerControl : MonoBehaviour
 
 	void Update()
 	{
-		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
-        
-		if(Input.GetButtonDown("Jump") && grounded)
-			jump = true;
-	}
+		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+
+        Debug.Log("Grounded: " + grounded);
+        if (Input.GetButtonDown("Jump") && grounded) {
+            jump = true;
+            Debug.Log("Jump!");
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.F)) {
+
+            Invoke("Fire", 0.25f);
+            anim.SetTrigger("Shoot");
+        }
+    }
 
 
 	void FixedUpdate ()
@@ -49,7 +62,7 @@ public class PlayerControl : MonoBehaviour
 		anim.SetFloat("Speed", Mathf.Abs(h));
         
 		if(h * GetComponent<Rigidbody2D>().velocity.x < maxSpeed)
-			GetComponent<Rigidbody2D>().AddForce(Vector2.right * h * moveForce);
+			GetComponent<Rigidbody2D>().AddForce(Vector2.right * h *2 * moveForce);
         
 		if(Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > maxSpeed)
 			GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
@@ -62,16 +75,21 @@ public class PlayerControl : MonoBehaviour
 		if(jump)
 		{
 			anim.SetTrigger("Jump");
-            
-			int i = Random.Range(0, jumpClips.Length);
-			AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
-            
 			GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
             
 			jump = false;
 		}
+
 	}
 	
+    void Fire() {
+        var fire = Instantiate(firePrefab, fireSpawn.position, fireSpawn.localRotation);
+        if(facingRight)
+            fire.GetComponent<Rigidbody2D>().velocity = new Vector2(2,0);
+        else
+            fire.GetComponent<Rigidbody2D>().velocity = new Vector2(-2, 0);
+        Destroy(fire, 0.5f);
+    }
 	
 	void Flip ()
 	{
@@ -90,7 +108,7 @@ public class PlayerControl : MonoBehaviour
                 dir = -1;
             else
                 dir = 1;
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(dir * 3000, 0f));
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(dir * 3, 0f));
             Debug.Log("Health reduced");
             gs.reduceHealth();
         }

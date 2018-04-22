@@ -5,6 +5,7 @@ using UnityEngine;
 public class MovingPlatformScript : MonoBehaviour {
 
     public float platformSpeed;
+    public float length;
 
 	// Use this for initialization
 	void Start () {
@@ -13,6 +14,6 @@ public class MovingPlatformScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position = new Vector3(Mathf.PingPong(Time.time * platformSpeed, 10), transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.PingPong(Time.time * platformSpeed, length), transform.position.y, transform.position.z);
     }
 }

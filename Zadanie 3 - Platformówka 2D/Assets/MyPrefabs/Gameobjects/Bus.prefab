@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneIndex: 1
+  tryAgain: {fileID: 0}
 --- !u!212 &212264223582326750
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
 	public float moveSpeed = 2f;		
 
-    private Transform frontCheck;       
+    private Transform frontCheck;
     private Transform groundCheck;
     bool grounded;
 
@@ -44,8 +44,10 @@ public class Enemy : MonoBehaviour
 	
 	public void Flip()
 	{
-		Vector3 enemyScale = transform.localScale;
+        Vector3 enemyPos = transform.position;
+		Vector3 enemyScale = transform.lossyScale;
 		enemyScale.x *= -1;
+        //transform.position = enemyPos;
 		transform.localScale = enemyScale;
 	}
 
