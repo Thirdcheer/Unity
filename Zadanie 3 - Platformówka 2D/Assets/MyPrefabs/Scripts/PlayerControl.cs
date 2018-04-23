@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
     public GameObject firePrefab;
     public Transform fireSpawn;
+    public AudioClip footsteps;
+    public AudioClip jumpSound;
+    public AudioClip shootSound;
+    private AudioSource audioSource;
+    public Slider slider;
 
 	[HideInInspector]
 	public bool facingRight = true;			
@@ -22,18 +28,36 @@ public class PlayerControl : MonoBehaviour
 	private Animator anim;
     GameStats gs;
 
+    public void OnSliderValueChanged() {
+        audioSource.volume = slider.value;
+    }
+
     private void OnLevelWasLoaded(int level) {
         gameObject.transform.position = new Vector2(0, 0.81f);
     }
 
+    public void playTupTup() {
+        audioSource.PlayOneShot(footsteps);
+    }
+    public void playJump() {
+        audioSource.PlayOneShot(jumpSound);
+    }
+    public void playShoot() {
+        audioSource.PlayOneShot(shootSound);
+    }
+
+
     private void Start() {
         gs = GameObject.FindObjectOfType<GameStats>();
+        audioSource = gameObject.GetComponent<AudioSource>();
+        slider.value = audioSource.volume;
     }
     void Awake()
 	{
 		groundCheck = transform.Find("groundCheck");
 		anim = GetComponent<Animator>();
-	}
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
 
 
 	void Update()
