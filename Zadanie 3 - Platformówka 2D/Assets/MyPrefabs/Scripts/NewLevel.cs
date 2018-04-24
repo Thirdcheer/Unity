@@ -19,14 +19,19 @@ public class NewLevel : MonoBehaviour {
 	}
 
     private void OnTriggerEnter2D(Collider2D other) {
+        var objects = GameObject.FindGameObjectWithTag("Finish");
+
         if (other.gameObject.CompareTag("Player"))
         {
             if(sceneIndex == 99) {
-                if (tryAgain != null) {
+                if (tryAgain != null && objects == null) {
+                    tryAgain.SetActive(true);
+
                     var panel = GameObject.Instantiate(tryAgain);
                     Canvas cv = GameObject.FindObjectOfType<Canvas>();
                     panel.transform.parent = cv.transform;
                     panel.GetComponent<RectTransform>().localPosition = new Vector2(0, 0);
+                    Debug.Log("Game over");
                 }
             }
             else

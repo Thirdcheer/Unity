@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     private void OnLevelWasLoaded(int level) {
-        gameObject.transform.position = new Vector2(0, 0.81f);
+        gameObject.transform.position = new Vector2(0, -0.69f);
     }
 
     public void playTupTup() {
@@ -45,13 +45,13 @@ public class PlayerControl : MonoBehaviour
     public void playShoot() {
         audioSource.PlayOneShot(shootSound);
     }
-
-
+    
     private void Start() {
         gs = GameObject.FindObjectOfType<GameStats>();
         audioSource = gameObject.GetComponent<AudioSource>();
         slider.value = audioSource.volume;
     }
+
     void Awake()
 	{
 		groundCheck = transform.Find("groundCheck");
