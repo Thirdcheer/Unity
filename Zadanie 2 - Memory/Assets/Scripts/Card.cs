@@ -6,20 +6,18 @@ public class Card : MonoBehaviour {
 
     public GameObject cardBack;
     private GameController gameController;
+    [HideInInspector] public IState currentState;
 
     public string cardName;
 
 	// Use this for initialization
 	void Start () {
-        if (!cardBack.active)
-        {
-
-            cardBack.SetActive(true);
-        }
-
+        
         Debug.Log(GameObject.FindGameObjectsWithTag("GameController").Length);
-
         gameController = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>();
+
+        currentState = new UnRevealedState(gameController);
+        currentState.Start(this);
 	}
 	
 	// Update is called once per frame
@@ -29,16 +27,15 @@ public class Card : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        if (cardBack.activeSelf && gameController.canBeRevealed() && !gameController.Blocked())
-        {
-            cardBack.SetActive(false);
-            gameController.CardRevealed(this);
-        }
+        Debug.Log(currentState);
+        currentState.OnMouseDown(this);
     }
 
-    public void Unreveal()
+    public void ChangeState(IState state)
     {
-        cardBack.SetActive(true);
+        currentState = state;
+        currentState.Start(this);
+        //cardBack.SetActive(true);
     }
 
 

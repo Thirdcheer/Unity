@@ -25,16 +25,41 @@ public class GameController : MonoBehaviour
 
     public Text scoreLabel;
     public Text winLabel;
+    public Text totalPairsLabel;
+    public Text totalCardsLabel;
+    public Text hiscoreLabel;
 
     private Card firstCard;
     private Card secondCard;
     public GameObject spawnPos;
 
+    string[] playerPrefsKeys = new string[] { "totalPairs", "totalCards", "hiscore" };
+    int totalPairs;
+    [HideInInspector] public int totalCards;
+    int hiscore;
 
-
+    
     // Use this for initialization
     void Start()
     {
+        if (PlayerPrefs.HasKey("totalPairs"))
+        {
+            totalPairs = PlayerPrefs.GetInt("totalPairs");
+            totalPairsLabel.text = "Total pairs matched: " + totalPairs.ToString();
+        }
+
+        if (PlayerPrefs.HasKey("totalCards"))
+        {
+            totalCards = PlayerPrefs.GetInt("totalCards");
+            totalCardsLabel.text = "Total cards clicked: " + totalCards.ToString();
+        }
+
+        if (PlayerPrefs.HasKey("hiscore"))
+        {
+            hiscore = PlayerPrefs.GetInt("hiscore");
+            hiscoreLabel.text = "Highest score: " + hiscore.ToString();
+        }
+
         winLabel.enabled = false;
         Vector3 startPos = spawnPos.transform.position;
 
@@ -91,6 +116,8 @@ public class GameController : MonoBehaviour
     {
         if(firstCard.cardName == secondCard.cardName)
         {
+            totalPairs++;
+            totalPairsLabel.text = "Total pairs matched: " + totalPairs.ToString();
             score += 10;
             scoreLabel.text = "Score: " + score;
             matches += 1;
@@ -101,6 +128,12 @@ public class GameController : MonoBehaviour
             {
                 Debug.Log("Matches completed" + matches);
                 winLabel.enabled = true;
+                if(score > hiscore)
+                {
+                    PlayerPrefs.SetInt("hiscore", score);
+                }
+                PlayerPrefs.SetInt("totalPairs", totalPairs);
+                PlayerPrefs.SetInt("totalCards", totalCards);
             }
         }
         else
@@ -111,8 +144,8 @@ public class GameController : MonoBehaviour
             scoreLabel.text = "Score: " + score;
 
             clickingBlocked = true;
-            firstCard.Unreveal();
-            secondCard.Unreveal();
+            firstCard.ChangeState(new UnRevealedState(this));
+            secondCard.ChangeState(new UnRevealedState(this));
             clickingBlocked = false;
         }
 
@@ -135,6 +168,11 @@ public class GameController : MonoBehaviour
         return firstCard != null && secondCard != null;
     }
 
+    public void UpdateStats()
+    {
+        totalCards++;
+        totalCardsLabel.text = "Total cards clicked: " + totalCards.ToString();
+    }
 }
 
 
