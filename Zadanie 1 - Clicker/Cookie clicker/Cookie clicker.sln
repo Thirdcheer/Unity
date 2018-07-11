@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cookie clicker", "Cookie clicker.csproj", "{D73B52C0-6064-77A5-A467-353DB61AA943}"
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cookie clicker", "Assembly-CSharp.csproj", "{18448E60-E407-0B84-EA58-8E51761C4E83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D73B52C0-6064-77A5-A467-353DB61AA943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D73B52C0-6064-77A5-A467-353DB61AA943}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D73B52C0-6064-77A5-A467-353DB61AA943}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D73B52C0-6064-77A5-A467-353DB61AA943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18448E60-E407-0B84-EA58-8E51761C4E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18448E60-E407-0B84-EA58-8E51761C4E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18448E60-E407-0B84-EA58-8E51761C4E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18448E60-E407-0B84-EA58-8E51761C4E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
